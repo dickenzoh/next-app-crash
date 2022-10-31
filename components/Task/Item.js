@@ -6,6 +6,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { styled } from "@mui/material/styles";
 import EditModal from "../Modal/EditModal";
+import { useDispatch, useSelector } from "react-redux";
 
 const Itm = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -17,7 +18,9 @@ const Itm = styled(Paper)(({ theme }) => ({
   justifyContent: "space-between",
 }));
 
-const Item = () => {
+const Item = (props) => {
+  const { data } = props;
+  console.log(data.name);
   return (
     <Box
       sx={{
@@ -37,7 +40,7 @@ const Item = () => {
             <IconButton aria-label="delete" disabled color="primary">
               <CheckCircleOutlineOutlinedIcon />
             </IconButton>
-            <Typography variant="body2">dsesdsesdses</Typography>
+            <Typography variant="body2">{data?.title}</Typography>
           </Box>
           <Box
             sx={{
@@ -46,7 +49,7 @@ const Item = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6">2/1</Typography>
+            <Typography variant="h6">{`${data?.act}/${data?.est}`}</Typography>
             <EditModal />
           </Box>
         </Itm>

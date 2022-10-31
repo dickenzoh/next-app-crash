@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -14,6 +14,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box } from "@mui/system";
 import { Input, TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../slice/taskSlice";
+import useLocalStorage from "../../useLocalStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -54,13 +57,47 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function AddEditModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [taskData, setTaskData] = useLocalStorage("tasks", [
+    {
+      id: 1,
+      title: "first one",
+      est: 5,
+      act: 2,
+      note: "working",
+    },
+  ]);
+  const dispatch = useDispatch();
+  console.log(taskData);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const clear = () => {
+    setTaskData({
+      id: "",
+      title: "",
+      est: 0,
+      act: 0,
+      note: "",
+    });
+  };
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    console.log(taskData);
+    //if (currentId) {
+    // dispatch(
+    //   updateTask(currentId, { ...taskData, name: user?.result?.name })
+    // );
+    //} else {
+    dispatch(addTask({ ...taskData, name: e.target.value }));
+    //}
+    handleClose();
   };
 
   return (
@@ -77,27 +114,41 @@ export default function AddEditModal() {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
+        <Box sx={{ m: "10px" }}>
+          <TextField
+            name="title"
+            variant="outlined"
+            type="text"
+            label="What are you working on"
+            value={taskData?.title}
+            onChange={(e) =>
+              setTaskData({ ...taskData, title: e.target.value })
+            }
+          />
+        </Box>
+        <Box sx={{ color: "rgb(85, 85, 85)", fontWeight: "bold", m: "10px" }}>
+          Est pomodoros
+        </Box>
         <Box
           sx={{
-            backgroundColor: "white",
-            borderRadius: "8px",
-            textAlign: "left",
-            marginTop: "12px",
-            boxShadow:
-              "rgb(0 0 0 / 15%) 0px 10px 20px, rgb(0 0 0 / 10%) 0px 3px 6px",
-            animation: "0.1s ease-in-out 0s 1 normal none running expand",
+            m: "10px",
           }}
         >
-          <Input placeholder="What are you working on?" />
-          <Box sx={{ color: "rgb(85, 85, 85)", fontWeight: "bold" }}>
-            Est pomodoros
-          </Box>
           <TextField
-            hiddenLabel
-            id="filled-hidden-label-small"
-            defaultValue=""
+            id="filled-number"
+            name="est"
+            type="number"
+            value={taskData?.est}
+            onChange={(e) => setTaskData({ ...taskData, est: e.target.value })}
+            InputLabelProps={{
+              shrink: true,
+            }}
             variant="filled"
-            size="small"
+            InputProps={{
+              inputProps: {
+                min: 1,
+              },
+            }}
           />
           <Button variant="contained">
             <KeyboardArrowDownIcon />
@@ -105,9 +156,28 @@ export default function AddEditModal() {
           <Button variant="contained">
             <KeyboardArrowUpIcon />
           </Button>
-          <TextField fullWidth label="some notes" id="fullWidth" />
+        </Box>
+        <Box sx={{ m: "10px" }}>
+          <TextField
+            name="note"
+            variant="outlined"
+            type="text"
+            label="some notes"
+            value={taskData?.note}
+            onChange={(e) => setTaskData({ ...taskData, note: e.target.value })}
+          />
         </Box>
         <DialogActions>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "start-end",
+            }}
+          >
+            <Button autoFocus onClick={handleClose}>
+              Delete
+            </Button>
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -116,14 +186,9 @@ export default function AddEditModal() {
           >
             <Box>
               <Button autoFocus onClick={handleClose}>
-                Delete
-              </Button>
-            </Box>
-            <Box>
-              <Button autoFocus onClick={handleClose}>
                 Cancel
               </Button>
-              <Button autoFocus onClick={handleClose}>
+              <Button autoFocus onClick={handleAddTask}>
                 Save
               </Button>
             </Box>

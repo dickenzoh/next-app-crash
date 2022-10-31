@@ -12,6 +12,13 @@ import Typography from "@mui/material/Typography";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Switch, TextField } from "@mui/material";
 import { Box } from "@mui/system";
+import CustomDropdown from "./CustomDropdown";
+import CustomSlider from "./CustomSilder";
+import CustomNoInput from "./CustomNoInput";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../slice/taskSlice";
+import useLocalStorage from "../../useLocalStorage";
+import { addSettings } from "../../slice/settingSlice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -54,6 +61,36 @@ BootstrapDialogTitle.propTypes = {
 export default function SettingsModal() {
   const [open, setOpen] = React.useState(false);
   const [checked, setChecked] = React.useState(true);
+  const [settingsData, setSettingsData] = useLocalStorage("settings", [
+    {
+      id: 1,
+      duration: {
+        pomodoro: 25,
+        shortBreak: 10,
+        longBreak: 15,
+      },
+      autostartBreaks: false,
+      autostartPomodoros: false,
+      longBreakInterval: 4,
+      alarmSound: {
+        type: "digital",
+        volume: 10,
+        repeat: 1,
+      },
+      tickingSound: {
+        type: "none",
+        volume: 50,
+      },
+      hourFormant: "24 - hour",
+      darkMode: false,
+      notification: {
+        type: "every",
+        min: 5,
+      },
+    },
+  ]);
+  const dispatch = useDispatch();
+  console.log(settingsData[0]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -66,8 +103,15 @@ export default function SettingsModal() {
     setChecked(event.target.checked);
   };
 
+  const handleSave = (e) => {
+    e.preventDefault();
+    console.log(settingsData);
+    dispatch(addSettings({ ...settingsData, name: e.target.value }));
+    //}
+    handleClose();
+  };
   return (
-    <div>
+    <>
       <Button
         variant="outlined"
         onClick={handleClickOpen}
@@ -78,226 +122,416 @@ export default function SettingsModal() {
       </Button>
       <Box
         sx={{
+          color: "rgb(34, 34, 34)",
+          borderRadius: "8px",
+          backgroundColor: "white",
           position: "relative",
-          maxWidth: "780px",
-          height: "auto",
+          maxWidth: "400px",
+          width: "95%",
+          zIndex: 2147483647,
+          borderTop: "1px solid rgb(239, 239, 239)",
+          borderBottom: "1px solid rgb(239, 239, 239)",
           margin: "auto",
+          transition: "all 0.2s ease-in 0s",
+          transform: "translateY(20px)",
+          boxShadow:
+            "rgb(0 0 0 / 15%) 0px 10px 20px, rgb(0 0 0 / 10%) 0px 3px 6px",
+          overflow: "hidden",
+          display: "block",
         }}
       >
-        <BootstrapDialog
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={open}
+        <Box
+          sx={{
+            padding: "20px 20px 0px",
+          }}
         >
-          <BootstrapDialogTitle
-            id="customized-dialog-title"
+          <BootstrapDialog
             onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
           >
-            <Box
-              sx={{
-                fontSize: "16px",
-                color: "rgb(187, 187, 187)",
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                marginBottom: "16px",
-              }}
+            <BootstrapDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose}
             >
-              {" "}
-              Timer Setting
-            </Box>
-          </BootstrapDialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom>Time (minutes)</Typography>
-            <Box
-              sx={{
-                display: "flex",
-                borderTop: "1px solid rgba(182, 165, 166, 0.2)",
-                padding: "20px 0px",
-                minHeight: "30px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <TextField
-                id="filled-number"
-                label="pomodoro"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
+              <Box
+                sx={{
+                  fontSize: "16px",
+                  color: "rgb(187, 187, 187)",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  marginBottom: "16px",
                 }}
-                variant="filled"
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  },
+              >
+                {" "}
+                Timer Setting
+              </Box>
+            </BootstrapDialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>Time (minutes)</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  mb: "20px",
                 }}
-              />
-              <TextField
-                id="filled-number"
-                label="Short Break"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    padding: "20px 0px",
+                    minHeight: "30px",
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    gap: 2,
+                  }}
+                >
+                  <TextField
+                    id="filled-number"
+                    name="promodoro"
+                    type="number"
+                    value={settingsData[0]?.duration.pomodoro}
+                    onChange={(e) =>
+                      setSettingsData({
+                        ...settingsData,
+                        promodoro: e.target.value,
+                      })
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="filled"
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                  />
+                  <TextField
+                    id="filled-number"
+                    name="shortBreak"
+                    type="number"
+                    value={settingsData[0]?.duration.shortBreak}
+                    onChange={(e) =>
+                      setSettingsData({
+                        ...settingsData,
+                        shortBreak: e.target.value,
+                      })
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="filled"
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                  />
+                  <TextField
+                    id="filled-number"
+                    name="longBreak"
+                    type="number"
+                    value={settingsData[0]?.duration.longBreak}
+                    onChange={(e) =>
+                      setSettingsData({
+                        ...settingsData,
+                        longBreak: e.target.value,
+                      })
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="filled"
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                  />
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-                variant="filled"
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  },
+              >
+                <Typography>Auto start Breaks?</Typography>
+                <Switch
+                  name="breakAuto"
+                  checked={settingsData[0]?.autostartBreaks}
+                  inputProps={{ "aria-label": "controlled" }}
+                  onChange={(e) =>
+                    setSettingsData({
+                      ...settingsData,
+                      breakAuto: e.target.value,
+                    })
+                  }
+                  value={settingsData[0]?.autostartBreaks}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-              />
-              <TextField
-                id="filled-number"
-                label="Long Break"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
+              >
+                <Typography>Auto start Pomodoros?</Typography>
+                <Switch
+                  name="pomodoroAuto"
+                  checked={settingsData[0]?.autostartPomodoros}
+                  inputProps={{ "aria-label": "controlled" }}
+                  onChange={(e) =>
+                    setSettingsData({
+                      ...settingsData,
+                      pomodoroAuto: e.target.value,
+                    })
+                  }
+                  value={settingsData[0]?.autostartPomodoros}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-                variant="filled"
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  },
+              >
+                <Typography>Long Break interval</Typography>
+                <TextField
+                  id="filled-number"
+                  name="longBreakInterval"
+                  type="number"
+                  value={settingsData[0]?.longBreakInterval}
+                  onChange={(e) =>
+                    setSettingsData({
+                      ...settingsData,
+                      longBreakInterval: e.target.value,
+                    })
+                  }
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="filled"
+                  InputProps={{
+                    inputProps: {
+                      min: 1,
+                    },
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Auto start Breaks?</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Auto start Pomodoros?</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Long Break interval</Typography>
-              <TextField
-                id="filled-number"
-                label="Long Break"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography>Alarm Sound</Typography>
+                  <CustomDropdown />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <CustomSlider />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    mt: "20px",
+                    gap: 2,
+                  }}
+                >
+                  <Typography>repeat</Typography>
+                  <TextField
+                    id="filled-number"
+                    name="alarmRepet"
+                    type="number"
+                    value={settingsData[0]?.alarmSound.repeat}
+                    onChange={(e) =>
+                      setSettingsData({
+                        ...settingsData,
+                        alarmRepet: e.target.value,
+                      })
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="filled"
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                  />
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-                variant="filled"
-                InputProps={{
-                  inputProps: {
-                    min: 1,
-                  },
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography>Tracking Sound</Typography>
+                  <CustomDropdown />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <CustomSlider />
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
                 }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Alarm Sound</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Tracking Sound</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Hour Format</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Dark Mode when running</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogContent dividers>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Notification</Typography>
-              <Switch
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ "aria-label": "controlled" }}
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Ok
-            </Button>
-          </DialogActions>
-        </BootstrapDialog>
+              >
+                <Typography>Hour Format</Typography>
+                <CustomDropdown />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
+                }}
+              >
+                <Typography>Dark Mode when running</Typography>
+                <Switch
+                  name="darkMode"
+                  checked={settingsData[0]?.darkMode}
+                  inputProps={{ "aria-label": "controlled" }}
+                  onChange={(e) =>
+                    setSettingsData({
+                      ...settingsData,
+                      darkMode: e.target.value,
+                    })
+                  }
+                  value={settingsData[0]?.darkMode}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  display: "flex",
+                  borderBottom: "2px solid rgba(182, 165, 166, 0.2)",
+                  padding: "20px 0px",
+                  minHeight: "30px",
+                  mb: "20px",
+                  height: "150px",
+                }}
+              >
+                <Typography>Notification</Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                  }}
+                >
+                  <CustomDropdown />
+                  <TextField
+                    id="filled-number"
+                    name="notificationTime"
+                    type="number"
+                    value={settingsData[0]?.notification.min}
+                    onChange={(e) =>
+                      setSettingsData({
+                        ...settingsData,
+                        notificationTime: e.target.value,
+                      })
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="filled"
+                    InputProps={{
+                      inputProps: {
+                        min: 1,
+                      },
+                    }}
+                  />
+                  min
+                </Box>
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleSave}>
+                Ok
+              </Button>
+            </DialogActions>
+          </BootstrapDialog>
+        </Box>
       </Box>
-    </div>
+    </>
   );
 }
+//padding: 20px 20px 0px;

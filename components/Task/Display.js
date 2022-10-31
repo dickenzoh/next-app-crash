@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 const Display = () => {
+  //const { est, name } = props;
   return (
     <Box
       sx={{
@@ -11,8 +12,8 @@ const Display = () => {
         color: "#fff",
       }}
     >
-      <Typography>#2</Typography>
-      <Typography>Deersrsrs</Typography>
+      <Typography>#1</Typography>
+      <Typography>dddesrse</Typography>
     </Box>
   );
 };

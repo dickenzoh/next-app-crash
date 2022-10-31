@@ -57,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function SubscriptionModal() {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -111,254 +111,316 @@ export default function SubscriptionModal() {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          Premium Plan
-        </BootstrapDialogTitle>
         <Box
           sx={{
-            color: "rgb(189, 189, 189)",
-            fontWeight: "bold",
-            fontSize: "18px",
-            marginTop: "38px",
-            width: 526,
+            padding: "14px 20px",
           }}
         >
-          You can...
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            fontSize: "18px",
-            fontWeight: "bold",
-            color: "rgb(87, 87, 87)",
-          }}
-        >
-          {listPremiumOptions.map((item) => (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IconButton aria-label="delete" color="error">
-                <CheckCircleOutlineOutlinedIcon />
-              </IconButton>
-              <Box
-                sx={{
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                }}
-              >
-                {item}
-              </Box>
-            </Box>
-          ))}
-        </Box>
-        <Box
-          sx={{
-            color: "rgb(189, 189, 189)",
-            fontWeight: "bold",
-            fontSize: "18px",
-            marginTop: "38px",
-            width: 526,
-          }}
-        >
-          Select plan
-        </Box>
-        <TabContext value={value}>
+          <BootstrapDialogTitle
+            id="customized-dialog-title"
+            onClose={handleClose}
+          >
+            Premium Plan
+          </BootstrapDialogTitle>
+          <Box
+            sx={{
+              color: "rgb(189, 189, 189)",
+              fontWeight: "bold",
+              fontSize: "18px",
+              marginTop: "38px",
+              width: 526,
+            }}
+          >
+            You can...
+          </Box>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
+              alignItems: "flex-start",
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "rgb(87, 87, 87)",
             }}
           >
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab
+            {listPremiumOptions.map((item) => (
+              <Box
                 sx={{
-                  cursor: "pointer",
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
-                  borderRadius: "8px",
-                  margin: "0px 8px",
-                  padding: "16px 8px",
-                  width: "110px",
-                  border: "2px solid rgb(225, 155, 153)",
-                  backgroundColor: "rgb(248, 232, 231)",
                 }}
-                label="Monthly   $36     /month"
-                value="1"
-              />
-              <Tab
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "8px",
-                  margin: "0px 8px",
-                  padding: "16px 8px",
-                  width: "110px",
-                  border: "2px solid rgb(225, 155, 153)",
-                  backgroundColor: "rgb(248, 232, 231)",
-                }}
-                label="Yearly $36 /year"
-                value="2"
-              />
-              <Tab
-                sx={{
-                  cursor: "pointer",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  borderRadius: "8px",
-                  margin: "0px 8px",
-                  padding: "16px 8px",
-                  width: "110px",
-                  border: "2px solid rgb(225, 155, 153)",
-                  backgroundColor: "rgb(248, 232, 231)",
-                }}
-                label="Forever $36 /lifetime "
-                value="3"
-              />
-            </TabList>
-            <TabPanel value="1">
-              <Itm>
-                <RocketLaunchOutlinedIcon />
-                Go Premium - 7days free
-              </Itm>
-              <subNotes>
+              >
+                <IconButton aria-label="delete" color="error">
+                  <CheckCircleOutlineOutlinedIcon />
+                </IconButton>
                 <Box
                   sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
+                    fontSize: "18px",
+                    fontWeight: "bold",
                   }}
                 >
-                  * After the 7 days of free trial, you will automatically be
-                  transitioned to the paying subscription.
+                  {item}
                 </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * After the 7 days of free trial, you will automatically be
-                  transitioned to the paying subscription.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * The subscription will be auto-renewed until you unsubscribe.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * You will be notified a week prior to the renewal date.
-                </Box>
-              </subNotes>
-            </TabPanel>
-            <TabPanel value="2">
-              {" "}
-              <Itm>
-                <RocketLaunchOutlinedIcon />
-                Go Premium - 7days free
-              </Itm>
-              <subNotes>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * After the 7 days of free trial, you will automatically be
-                  transitioned to the paying subscription.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * After the 7 days of free trial, you will automatically be
-                  transitioned to the paying subscription.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * The subscription will be auto-renewed until you unsubscribe.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * You will be notified a week prior to the renewal date.
-                </Box>
-              </subNotes>
-            </TabPanel>
-            <TabPanel value="3">
-              {" "}
-              <Itm>
-                <RocketLaunchOutlinedIcon />
-                Go Premium
-              </Itm>
-              <subNotes>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * You will immediately be charged after placing this order.
-                </Box>
-                <Box
-                  sx={{
-                    color: "rgb(138, 138, 138)",
-                    fontSize: "14px",
-                    margin: "6px 0px",
-                    lineHeight: "1.4em",
-                  }}
-                >
-                  * You can request a refund within 7 days after the purchase.
-                </Box>
-              </subNotes>
-            </TabPanel>
+              </Box>
+            ))}
           </Box>
-        </TabContext>
+          <Box
+            sx={{
+              color: "rgb(189, 189, 189)",
+              fontWeight: "bold",
+              fontSize: "18px",
+              marginTop: "38px",
+              width: 526,
+            }}
+          >
+            Select plan
+          </Box>
+          <TabContext value={value}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  backgroundColor: "#fff",
+
+                  gap: 2,
+                  "& button": {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "8px",
+                    margin: "0px 8px",
+                    padding: "16px 8px",
+                    width: "110px",
+                    border: "2px solid rgb(240, 240, 240)",
+                  },
+                  "& button:hover": {
+                    cursor: "pointer",
+                    textAlign: "center",
+                    padding: "8px 0px",
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    backgroundColor: "rgb(225, 155, 153)",
+                    color: "white",
+                    borderRight: "2px solid rgb(225, 155, 153)",
+                  },
+                  "& button:active": {
+                    cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderRadius: "8px",
+                    margin: "0px 8px",
+                    padding: "16px 8px",
+                    width: "110px",
+                    border: " 2px solid rgb(225, 155, 153)",
+                    backgroundColor: "rgb(248, 232, 231)",
+                  },
+                  "& button.Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "rgb(225, 155, 153)",
+                    borderBottom: "#fff",
+                  },
+                  "& span.MuiTabs-indicator": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+              >
+                <TabList
+                  onChange={handleChange}
+                  aria-label="lab API tabs example"
+                >
+                  <Tab
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      borderRadius: "8px",
+                      margin: "0px 8px",
+                      padding: "16px 8px",
+                      width: "110px",
+                      border: "2px solid rgb(225, 155, 153)",
+                      backgroundColor: "rgb(248, 232, 231)",
+                    }}
+                    label="Monthly   $36     /month"
+                    value="1"
+                  />
+                  <Tab
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      borderRadius: "8px",
+                      margin: "0px 8px",
+                      padding: "16px 8px",
+                      width: "110px",
+                      border: "2px solid rgb(225, 155, 153)",
+                      backgroundColor: "rgb(248, 232, 231)",
+                    }}
+                    label="Yearly $36 /year"
+                    value="2"
+                  />
+                  <Tab
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      borderRadius: "8px",
+                      margin: "0px 8px",
+                      padding: "16px 8px",
+                      width: "110px",
+                      border: "2px solid rgb(225, 155, 153)",
+                      backgroundColor: "rgb(248, 232, 231)",
+                    }}
+                    label="Forever $36 /lifetime "
+                    value="3"
+                  />
+                </TabList>
+              </Box>
+
+              <TabPanel value="1">
+                <Itm>
+                  <RocketLaunchOutlinedIcon />
+                  Go Premium - 7days free
+                </Itm>
+                <subNotes>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * After the 7 days of free trial, you will automatically be
+                    transitioned to the paying subscription.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * After the 7 days of free trial, you will automatically be
+                    transitioned to the paying subscription.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * The subscription will be auto-renewed until you
+                    unsubscribe.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * You will be notified a week prior to the renewal date.
+                  </Box>
+                </subNotes>
+              </TabPanel>
+              <TabPanel value="2">
+                {" "}
+                <Itm>
+                  <RocketLaunchOutlinedIcon />
+                  Go Premium - 7days free
+                </Itm>
+                <subNotes>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * After the 7 days of free trial, you will automatically be
+                    transitioned to the paying subscription.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * After the 7 days of free trial, you will automatically be
+                    transitioned to the paying subscription.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * The subscription will be auto-renewed until you
+                    unsubscribe.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * You will be notified a week prior to the renewal date.
+                  </Box>
+                </subNotes>
+              </TabPanel>
+              <TabPanel value="3">
+                {" "}
+                <Itm>
+                  <RocketLaunchOutlinedIcon />
+                  Go Premium
+                </Itm>
+                <subNotes>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * You will immediately be charged after placing this order.
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "rgb(138, 138, 138)",
+                      fontSize: "14px",
+                      margin: "6px 0px",
+                      lineHeight: "1.4em",
+                    }}
+                  >
+                    * You can request a refund within 7 days after the purchase.
+                  </Box>
+                </subNotes>
+              </TabPanel>
+            </Box>
+          </TabContext>
+        </Box>
       </BootstrapDialog>
     </div>
   );

@@ -14,6 +14,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import LocalFireDepartmentTwoToneIcon from "@mui/icons-material/LocalFireDepartmentTwoTone";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -23,6 +25,7 @@ import { Box, Divider, ListItem, ListItemText } from "@mui/material";
 import { CSVLink } from "react-csv";
 import CustomDatagrid from "./CustomDatagrid";
 import Ranking from "./Ranking";
+import useStyles from "./styles";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -76,6 +79,7 @@ const Summmary = () => {
     return (
       <Box
         sx={{
+          display: "block",
           width: 526,
           height: 550,
         }}
@@ -83,7 +87,7 @@ const Summmary = () => {
         <Chart
           chartType="ColumnChart"
           width="100%"
-          height="400px"
+          height="100vh"
           data={data}
         />
       </Box>
@@ -206,20 +210,59 @@ const Summmary = () => {
         </Box>
         <Box
           sx={{
-            marginRight: "30px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
           }}
         >
           <TabContext value={value}>
             <Box
               sx={{
+                borderBottom: 1,
                 border: "2px solid rgb(225, 155, 153)",
                 borderRadius: "8px",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                marginBottom: "18px",
-                marginTop: "25px",
-                width: "330px",
+                justifyContent: "space-between",
+                marginTop: "40px",
+                marginBottom: "40px",
+                "& button": {
+                  cursor: "pointer",
+                  textAlign: "center",
+                  color: "rgb(225, 155, 153)",
+                  padding: "8px 0px",
+                  fonteight: "bold",
+                  fontSize: "16px",
+                  borderRight: "2px solid rgb(225, 155, 153)",
+                  borderBottom: "none",
+                },
+                "& button:hover": {
+                  cursor: "pointer",
+                  textAlign: "center",
+                  padding: "8px 0px",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  backgroundColor: "rgb(225, 155, 153)",
+                  color: "white",
+                  borderRight: "2px solid rgb(225, 155, 153)",
+                },
+                "& button:active": {
+                  cursor: "pointer",
+                  textAlign: "center",
+                  padding: "8px 0px",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  backgroundColor: "rgb(225, 155, 153)",
+                  borderRight: "2px solid rgb(225, 155, 153)",
+                },
+                "& button.Mui-selected": {
+                  color: "#fff",
+                  backgroundColor: "rgb(225, 155, 153)",
+                  borderBottom: "#fff",
+                },
+                "& span.MuiTabs-indicator": {
+                  backgroundColor: "transparent",
+                },
               }}
             >
               <TabList
@@ -243,7 +286,46 @@ const Summmary = () => {
                 border: "2px solid rgb(225, 155, 153)",
               }}
             >
-              sds
+              <Box
+                sx={{
+                  width: "48px",
+                  textAlign: "center",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  color: "rgb(225, 155, 153)",
+                  fontWeight: "bold",
+                  padding: "4px 0px",
+                  borderRight: "2px solid rgb(225, 155, 153)",
+                }}
+              >
+                <ChevronLeftIcon />
+              </Box>
+              <Box
+                sx={{
+                  textAlign: "center",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  color: "rgb(225, 155, 153)",
+                  fontWeight: "bold",
+                  padding: "4px 0px",
+                }}
+              >
+                This Week
+              </Box>
+              <Box
+                sx={{
+                  width: "48px",
+                  textAlign: "center",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  color: "rgb(225, 155, 153)",
+                  fontWeight: "bold",
+                  padding: "4px 0px",
+                  borderLeft: "2px solid rgb(225, 155, 153)",
+                }}
+              >
+                <ChevronRightIcon />
+              </Box>
             </Box>
             <TabPanel value="1">
               <CustomChart />
@@ -385,24 +467,70 @@ const Detail = () => {
         </Box>
         <Box
           sx={{
-            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "12px",
+            marginBottom: "28px",
           }}
         >
           <Button
-            variant="outlined"
             onClick={handleEdit}
             startIcon={<SettingsOutlinedIcon />}
-            sx={{ color: "grey", border: "2px solid rgba(0, 0, 0, 0.4) " }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textRign: "center",
+              borderRadius: "4px",
+              cursor: "pointer",
+              opacity: 0.9,
+              minWidth: "70px",
+              background: "none",
+              border: "2px solid rgba(0, 0, 0, 0.4)",
+              boxShadow: "none",
+              color: "rgba(0, 0, 0, 0.4)",
+              fontWeight: "bold",
+              letterSpacing: "0.02em",
+              padding: " 4px 8px",
+              fontSize: "13px",
+              marginRight: "12px",
+            }}
           >
             Insert
           </Button>
+
           <Button
             variant="outlined"
             onClick={handleEdit}
             startIcon={<SettingsOutlinedIcon />}
-            sx={{ color: "grey", border: "2px solid rgba(0, 0, 0, 0.4) " }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textRign: "center",
+              borderRadius: "4px",
+              cursor: "pointer",
+              opacity: 0.9,
+              minWidth: "70px",
+              background: "none",
+              border: "2px solid rgba(0, 0, 0, 0.4)",
+              boxShadow: "none",
+              color: "rgba(0, 0, 0, 0.4)",
+              fontWeight: "bold",
+              letterSpacing: "0.02em",
+              padding: " 4px 8px",
+              fontSize: "13px",
+              marginRight: "12px",
+            }}
           >
-            <CSVLink className="hidden" data={csvData}>
+            <CSVLink
+              sx={{
+                width: "12px",
+                marginRight: "4px",
+                opacity: 0.3,
+              }}
+              data={csvData}
+            >
               Download
             </CSVLink>
             ;
@@ -447,7 +575,8 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ReportModal() {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("1");
+  const classStyles = useStyles();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -461,7 +590,13 @@ export default function ReportModal() {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        position: "relative",
+        maxWidth: "780px",
+        margin: "auto",
+      }}
+    >
       <Button
         variant="outlined"
         onClick={handleClickOpen}
@@ -475,26 +610,79 @@ export default function ReportModal() {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        ></BootstrapDialogTitle>
-        <TabContext value={value}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Summary" value="1" />
-            <Tab label="Detail" value="2" />
-            <Tab label="Ranking" value="3" />
-          </TabList>
-          <TabPanel value="1">
-            <Summmary />
-          </TabPanel>
-          <TabPanel value="2">
-            <Detail />
-          </TabPanel>
-          <TabPanel value="3">
-            <Ranking />
-          </TabPanel>
-        </TabContext>
+        <Box
+          sx={{
+            padding: "20px",
+            position: "relative",
+          }}
+        >
+          <TabContext value={value}>
+            <Box>
+              <Box
+                sx={{
+                  borderBottom: 1,
+                  border: "2px solid rgb(225, 155, 153)",
+                  borderRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-beteen",
+                  marginTop: "40px",
+                  marginBottom: "40px",
+                  "& button": {
+                    cursor: "pointer",
+                    textAlign: "center",
+                    color: "rgb(225, 155, 153)",
+                    padding: "8px 0px",
+                    fonteight: "bold",
+                    fontSize: "16px",
+                    borderRight: "2px solid rgb(225, 155, 153)",
+                    borderBottom: "none",
+                  },
+                  "& button:hover": {
+                    cursor: "pointer",
+                    textAlign: "center",
+                    padding: "8px 0px",
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    backgroundColor: "rgb(225, 155, 153)",
+                    color: "white",
+                    borderRight: "2px solid rgb(225, 155, 153)",
+                  },
+                  "& button:active": {
+                    backgroundColor: "rgb(225, 155, 153)",
+                    borderRight: "2px solid rgb(225, 155, 153)",
+                  },
+                  "& button.Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "rgb(225, 155, 153)",
+                    borderBottom: "#fff",
+                  },
+                  "& span.MuiTabs-indicator": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+              >
+                <TabList
+                  onChange={handleChange}
+                  aria-label="lab kwa tab API tabs example"
+                >
+                  <Tab label="Summary" value="1" />
+                  <Tab label="Detail" value="2" />
+                  <Tab label="Ranking" value="3" />
+                </TabList>
+              </Box>
+            </Box>
+
+            <TabPanel value="1">
+              <Summmary />
+            </TabPanel>
+            <TabPanel value="2">
+              <Detail />
+            </TabPanel>
+            <TabPanel value="3">
+              <Ranking />
+            </TabPanel>
+          </TabContext>
+        </Box>
       </BootstrapDialog>
     </Box>
   );

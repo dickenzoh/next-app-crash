@@ -1,12 +1,15 @@
 import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Display from "./Display";
 import Item from "./Item";
 import AddEditModal from "../Modal/AddEditModal";
+import { useDispatch, useSelector } from "react-redux";
 
 const Listitem = () => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.data);
+  console.log(tasks);
   return (
     <>
       <Display />
@@ -23,7 +26,9 @@ const Listitem = () => {
         <Typography variant="h5">Task</Typography>
         <MoreVertOutlinedIcon />
       </Box>
-      <Item />
+      {tasks?.map((task, index) => (
+        <Item data={task} />
+      ))}
       <Box
         sx={{
           width: "70%",
